@@ -51,6 +51,10 @@ async def upload(file: UploadFile):
 # ==========================
 #       CHAT ENDPOINT
 # ==========================
+@app.get("/")
+async def root():
+    return {"status": "alive", "message": "Backend is running"}
+
 @app.post("/chat")
 async def chat(req: ChatRequest):
     response = gemini.ask_question(
@@ -92,3 +96,4 @@ async def view_file(filename: str):
 # ==========================
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
