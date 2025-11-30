@@ -1,4 +1,4 @@
-const API_URL = "https://gemini-rag-assistant-production.up.railway.app";
+const API_URL = "https://gemini-rag-assistant-bf5o.onrender.com";
 
 // DOM Elements
 const filesGrid = document.getElementById('files-grid');
@@ -171,5 +171,6 @@ async function deleteFile(fileId) {
         }
     }
 }
+
 
 
