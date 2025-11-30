@@ -17,12 +17,18 @@ app = FastAPI()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "http://127.0.0.1:5501",
-        "http://localhost:5501",
+        "http://127.0.0.1:5501",   # Local testing
+        "http://localhost:5501",   # Local testing
         "http://127.0.0.1",
         "http://localhost",
         "http://localhost:8000",
+        "https://rag-assistant-kappa.vercel.app,
         "*"
+        # Keep this for now if you want to allow other random connections
+        # 👇 ADD YOUR VERCEL DOMAINS HERE
+        # "https://gemini-rag-assistant.vercel.app",      # Example 1 (Replace this!)
+        # "https://gemini-rag-assistant-git-main.vercel.app", # Example 2 (Preview URLs)
+        # # 👆 
     ],
     allow_credentials=True,
     allow_methods=["*"],
@@ -92,3 +98,4 @@ async def view_file(filename: str):
 # ==========================
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
