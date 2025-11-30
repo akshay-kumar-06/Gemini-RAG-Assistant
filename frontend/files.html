@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Library - Gemini RAG</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <div class="files-page-container">
+        <div class="back-nav" style="
+    background: linear-gradient(180deg, #ff6303 0%, #ff5404 40%, #ff5900 100%);
+    backdrop-filter: blur(18px) saturate(160%);
+    -webkit-backdrop-filter: blur(18px) saturate(160%);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 25px rgba(0,0,0,0.45);
+    padding: 14px 20px;
+    border-radius: 14px;
+    margin-bottom: 20px;
+    display: inline-block;
+">
+    <a href="index.html" class="back-link" style="
+        color: white;
+        font-weight: 700;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        text-decoration: none;
+    ">
+        <i class="fa-solid fa-arrow-left"></i> Back to Chat
+    </a>
+</div>
+
+
+        <div class="files-header">
+            <div class="header-title">
+                <h1>Document Library</h1>
+                <p>Manage your uploaded documents and knowledge base</p>
+            </div>
+
+            <div class="header-actions">
+                <div class="search-bar">
+                    <i class="fa-solid fa-search"></i>
+                    <input type="text" id="file-search" placeholder="Search files...">
+                </div>
+                <button class="upload-btn-large" id="upload-btn">
+                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                    Upload New
+                </button>
+                <input type="file" id="library-file-input" multiple style="display: none;">
+            </div>
+        </div>
+
+        <div class="files-grid" id="files-grid">
+            <!-- File cards will be rendered here -->
+            <div class="empty-state">
+                <i class="fa-solid fa-spinner fa-spin"></i>
+                <p>Loading files...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="files.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Gemini RAG Chat</title>
+
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- Styles (replace styles.css) -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-nav">
+        <button class="sidebar-nav-btn active" id="nav-btn-menu" title="Menu">
+          <i class="fa-solid fa-bars"></i>
+          <span>Menu</span>
+        </button>
+        <button class="sidebar-nav-btn" id="nav-btn-history" title="History">
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          <span>History</span>
+        </button>
+      </div>
+
+      <div class="sidebar-panels-container">
+        <div class="sidebar-wrapper" id="sidebar-wrapper">
+          <!-- Menu Panel -->
+          <div class="sidebar-panel" id="menu-panel">
+            <div class="panel-content">
+              <button class="action-btn primary" id="new-chat-btn">
+                <i class="fa-solid fa-plus"></i>
+                <span>New Chat</span>
+              </button>
+
+              <div class="sidebar-section">
+                <h3 class="section-title">
+                  <i class="fa-solid fa-cloud-arrow-up"></i>
+                  Upload Files
+                </h3>
+                <div class="drop-zone" id="drop-zone" tabindex="0">
+                  <i class="fa-solid fa-file-arrow-up"></i>
+                  <p>Drop files here</p>
+                  <span>or click to browse</span>
+                  <input type="file" id="chat-file-input" multiple accept=".pdf,.txt,.doc,.docx" hidden />
+                </div>
+              </div>
+
+              <div class="sidebar-section">
+                <h3 class="section-title">
+                  <i class="fa-solid fa-folder-open"></i>
+                  Recent Files
+                  <span class="file-badge" id="file-count">0</span>
+                </h3>
+                <div class="file-list" id="file-list"></div>
+              </div>
+
+              <!-- <button class="action-btn secondary" id="open-files-page">
+                <i class="fa-solid fa-folder"></i>
+                <span>View All Files</span>
+              </button> -->
+              <button id="open-files-page" style="
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    padding: 12px 14px;
+
+    background: rgba(0, 0, 0, 0.62);                 /* deep black glass */
+    backdrop-filter: blur(14px) saturate(160%);
+    -webkit-backdrop-filter: blur(14px) saturate(160%);
+
+    border: 1.5px solid rgba(255, 102, 0, 0.75);     /* orange glass border */
+    border-radius: 14px;
+
+    box-shadow: 
+        0 8px 28px rgba(255, 120, 30, 0.15),
+        0 2px 12px rgba(255, 90, 0, 0.12);
+
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+
+    cursor: pointer;
+    transition: all 0.25s ease;
+" onmouseover="
+    this.style.background='rgba(0,0,0,0.70)';
+    this.style.boxShadow='0 12px 34px rgba(255,120,30,0.25)';
+" onmouseout="
+    this.style.background='rgba(0,0,0,0.62)';
+    this.style.boxShadow='0 8px 28px rgba(255,120,30,0.15)';
+">
+                <i class="fa-solid fa-folder"></i>
+                <span>View All Files</span>
+              </button>
+
+              <div class="sidebar-section">
+                <h3 class="section-title">
+                  <!-- <i class="fa-solid fa-palette"></i> -->
+                  <!-- Theme -->
+                </h3>
+                <!-- <button class="action-btn theme" id="theme-toggle">
+                  <i class="fa-solid fa-circle-half-stroke"></i>
+                  <span>Toggle Theme</span>
+                </button> -->
+              </div>
+            </div>
+          </div>
+
+          <!-- History Panel -->
+          <div class="sidebar-panel" id="history-panel">
+            <div class="panel-content">
+              <div class="panel-header">
+                <h3>
+                  <i class="fa-solid fa-clock-rotate-left"></i>
+                  Chat History
+                </h3>
+              </div>
+              <div class="chat-history" id="chat-history"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Chat Area -->
+    <main class="chat-main">
+      <div class="chat-header">
+        <h1><i class="fa-solid fa-comments"></i> Gemini RAG Assistant</h1>
+      </div>
+
+      <div class="messages-container" id="messages-container">
+        <div class="message system">
+          <div class="avatar"><i class="fa-solid fa-robot"></i></div>
+          <div class="content">
+            <p>Hello! I'm your AI assistant. Upload some documents and ask me anything about them.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="thinking-indicator" id="thinking-indicator">
+        <div class="thinking-dots">
+          <span></span><span></span><span></span>
+        </div>
+        <span>Thinking...</span>
+      </div>
+
+      <div class="input-area">
+        <textarea id="user-input" placeholder="Ask something about your documents..." rows="1"></textarea>
+        <button id="send-btn" disabled><i class="fa-solid fa-paper-plane"></i></button>
+      </div>
+    </main>
+  </div>
+
+  <!-- Keep your JS file unchanged so functionality remains intact -->
+  <script src="app.js"></script>
+</body>
+
+</html>
