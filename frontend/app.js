@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:8000";
+const API_URL = "https://gemini-rag-assistant-production.up.railway.app";
 
 // State
 let chatHistory = [];
@@ -485,3 +485,4 @@ function viewFile(fileName) {
         window.open(`${API_URL}/files/view/${encodeURIComponent(fileName)}`, '_blank');
     }
 }
+
