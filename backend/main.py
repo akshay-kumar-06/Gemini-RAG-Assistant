@@ -22,7 +22,7 @@ app.add_middleware(
         "http://127.0.0.1",
         "http://localhost",
         "http://localhost:8000",
-        "https://rag-assistant-kappa.vercel.app,
+        "https://rag-assistant-kappa.vercel.app",
         "*"
         # Keep this for now if you want to allow other random connections
         # 👇 ADD YOUR VERCEL DOMAINS HERE
@@ -98,4 +98,5 @@ async def view_file(filename: str):
 # ==========================
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
+
 
