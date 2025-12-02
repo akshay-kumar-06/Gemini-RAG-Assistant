@@ -2,6 +2,7 @@ import google.generativeai as genai
 from pydantic import BaseModel
 from fastapi import UploadFile
 import io
+import os  # <--- Added this to handle local file saving
 
 class FileUploadResponse(BaseModel):
     filename: str
@@ -15,19 +16,38 @@ class GeminiService:
         self.chat_sessions = {}
 
     async def upload_file(self, file: UploadFile) -> FileUploadResponse:
-        file_bytes = io.BytesIO(await file.read())
+        """
+        Uploads file to Google Gemini AND saves a local copy for viewing.
+        """
+        # 1. Read the file content into memory
+        content = await file.read()
+
+        # 2. SAVE LOCALLY (The Fix for the "View" button)
+        # Check if uploads folder exists, if not create it
+        if not os.path.exists("uploads"):
+            os.makedirs("uploads")
+        
+        # Write the file to the local disk
+        file_path = f"uploads/{file.filename}"
+        with open(file_path, "wb") as f:
+            f.write(content)
+        print(f"DEBUG: Saved file locally to {file_path}")
+
+        # 3. Prepare for Gemini (using the same content)
+        file_bytes = io.BytesIO(content)
         mime_type = file.content_type or "application/octet-stream"
 
+        # 4. Upload to Google
         gemini_file = genai.upload_file(
             file_bytes,
             display_name=file.filename,
             mime_type=mime_type
         )
 
-        # ✅ FIXED: Use gemini_file.uri as the real unique ID
+        # 5. Return the response
         return FileUploadResponse(
             filename=file.filename,
-            file_id=gemini_file.uri,
+            file_id=gemini_file.uri, 
             mime_type=mime_type,
             uri=gemini_file.uri
         )
@@ -38,7 +58,7 @@ class GeminiService:
             
             # 1. Initialize model
             model = genai.GenerativeModel(
-                model_name="gemini-2.5-flash",
+                model_name="gemini-2.0-flash", # Updated to flash for speed/cost
                 system_instruction="You are a PDF-based RAG assistant. Answer only from uploaded documents. You have access to metadata. [page x]"
             )
 
@@ -126,11 +146,9 @@ class GeminiService:
         Delete a file from Gemini.
         """
         try:
-            # Ensure file_id is in the correct format 'files/...'
-            # If the user passed a full URI or just the ID, handle it.
-            # But typically it comes as 'files/xxx' from the frontend/backend flow.
             print(f"DEBUG: Deleting file {file_id}")
             genai.delete_file(file_id)
         except Exception as e:
             print(f"Error deleting file {file_id}: {e}")
             raise e
+            
